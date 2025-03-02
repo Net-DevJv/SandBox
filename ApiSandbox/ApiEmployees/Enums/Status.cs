@@ -13,9 +13,6 @@ namespace ApiEmployees.Enums
         Active = 1,
 
         [Description("Inativo")]
-        Inactive = 2,
-
-        [Description("Deletado")]
-        Deleted = 3
+        Inactive = 2
     }
 }

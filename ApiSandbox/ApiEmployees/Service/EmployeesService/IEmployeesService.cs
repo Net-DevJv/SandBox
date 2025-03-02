@@ -11,12 +11,12 @@ namespace ApiEmployees.Service.EmployeesService
 
         Task<ServiceResponse<EmployeesModel>> GetEmployeesById(int id);
 
-        Task<ServiceResponse<List<EmployeesModel>>> UpdateEmployees(EmployeesModel editEmployee);
+        Task<ServiceResponse<EmployeesModel>> UpdateEmployees(EmployeesModel editEmployee);
 
-        Task<ServiceResponse<List<EmployeesModel>>> ActivateEmployees(int id);
+        Task<ServiceResponse<EmployeesModel>> ActivateEmployees(int id);
 
-        Task<ServiceResponse<List<EmployeesModel>>> DeactivateEmployees(int id);
+        Task<ServiceResponse<EmployeesModel>> DeactivateEmployees(int id);
 
-        Task<ServiceResponse<List<EmployeesModel>>> DeleteEmployees(int id);
+        Task<ServiceResponse<EmployeesModel>> DeleteEmployees(int id);
     }
 }

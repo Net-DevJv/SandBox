@@ -9,10 +9,16 @@ namespace ApiEmployees.Mapping
         {
             employee.Name = newEmployee.Name;
             employee.LastName = newEmployee.LastName;
-            employee.Department = newEmployee.Department;
             employee.Status = Status.Created;
-            employee.Shift = newEmployee.Shift;
             employee.CreationDate = DateTime.Now;
+
+            var random = new Random();
+
+            var departments = Enum.GetValues(typeof(DepartmentType));
+            employee.Department = (DepartmentType)departments.GetValue(random.Next(departments.Length));
+
+            var shifts = Enum.GetValues(typeof(ShiftType));
+            employee.Shift = (ShiftType)shifts.GetValue(random.Next(shifts.Length));
         }
 
         public static void UpdateEmployeeProperties(this EmployeesModel employee, EmployeesModel editEmployee)
@@ -34,12 +40,6 @@ namespace ApiEmployees.Mapping
         public static void DeactivateEmployeeProperties(this EmployeesModel employee)
         {
             employee.Status = Status.Inactive;
-            employee.UpdateDate = DateTime.Now;
-        }
-
-        public static void DeleteEmployeeProperties(this EmployeesModel employee)
-        {
-            employee.Status = Status.Deleted;
             employee.UpdateDate = DateTime.Now;
         }
     }

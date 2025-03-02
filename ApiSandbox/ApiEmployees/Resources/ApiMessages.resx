@@ -118,40 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EX200" xml:space="preserve">
-    <value>Nenhum funcionário encontrado.</value>
+    <value>Funcionário(s) não encontrado(s).</value>
   </data>
   <data name="EX201" xml:space="preserve">
-    <value>Funcionário não encontrado.</value>
-  </data>
-  <data name="EX202" xml:space="preserve">
     <value>Dados do funcionário inválidos.</value>
   </data>
-  <data name="EX203" xml:space="preserve">
-    <value>Funcionário  já se encontra inativo.</value>
+  <data name="EX202" xml:space="preserve">
+    <value>Funcionário referente ao id ({0}) já se encontra inativo.</value>
   </data>
-  <data name="EX204" xml:space="preserve">
-    <value>Funcionário  já se encontra ativo.</value>
+  <data name="EX203" xml:space="preserve">
+    <value>Funcionário referente ao id ({0}) já se encontra ativo.</value>
   </data>
   <data name="IS100" xml:space="preserve">
-    <value>Busca realizada com sucesso.</value>
+    <value>Funcionário(s) criado(s) com sucesso.</value>
   </data>
   <data name="IS101" xml:space="preserve">
-    <value>Funcionário encontrado.</value>
+    <value>Lista de Funcionários retornada com sucesso.</value>
   </data>
   <data name="IS102" xml:space="preserve">
-    <value>Funcionário criado com sucesso.</value>
+    <value>Funcionário referente ao id ({0}) encontrado com sucesso.</value>
   </data>
   <data name="IS103" xml:space="preserve">
-    <value>Funcionário inativado com sucesso.</value>
+    <value>Funcionário referente ao id ({0}) atualizado com sucesso.</value>
   </data>
   <data name="IS104" xml:space="preserve">
-    <value>Update realizado com sucesso.</value>
+    <value>Funcionário referente ao id ({0}) ativado com sucesso.</value>
   </data>
   <data name="IS105" xml:space="preserve">
-    <value>Funcionário deletado com sucesso.</value>
+    <value>Funcionário referente ao id ({0}) desativado com sucesso.</value>
   </data>
   <data name="IS106" xml:space="preserve">
-    <value>Funcionário ativado com sucesso.</value>
+    <value>Funcionário referente ao id ({0}) deletado com sucesso.</value>
   </data>
   <data name="SYS500" xml:space="preserve">
     <value>Falha na comunicação com o banco de dados.</value>

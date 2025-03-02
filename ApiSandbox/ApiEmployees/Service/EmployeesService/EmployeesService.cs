@@ -38,7 +38,7 @@ namespace ApiEmployees.Service.EmployeesService
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Data = _context.Employees.ToList();
-                serviceResponse.Message = MessageManager.GetMessage("IS102");
+                serviceResponse.Message = MessageManager.GetMessage("IS100");
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace ApiEmployees.Service.EmployeesService
 
                 if (employees.Any())
                 {
-                    serviceResponse.Message = MessageManager.GetMessage("IS100");
+                    serviceResponse.Message = MessageManager.GetMessage("IS101");
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace ApiEmployees.Service.EmployeesService
                 if (employee == null)
                 {
                     serviceResponse.Data = null;
-                    serviceResponse.Message = MessageManager.GetMessage("EX201");
+                    serviceResponse.Message = MessageManager.GetMessage("EX200");
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -98,7 +98,7 @@ namespace ApiEmployees.Service.EmployeesService
                 else
                 {
                     serviceResponse.Data = employee;
-                    serviceResponse.Message = MessageManager.GetMessage("IS101");
+                    serviceResponse.Message = string.Format(MessageManager.GetMessage("IS102"), employee.Id);
                 }
             }
             catch (Exception ex)
@@ -111,18 +111,18 @@ namespace ApiEmployees.Service.EmployeesService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<EmployeesModel>>> UpdateEmployees(EmployeesModel editEmployee)
+        public async Task<ServiceResponse<EmployeesModel>> UpdateEmployees(EmployeesModel editEmployee)
         {
-            var serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+            var serviceResponse = new ServiceResponse<EmployeesModel>();
 
             try
             {
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == editEmployee.Id);
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == editEmployee.Id);
 
                 if (employee == null)
                 {
                     serviceResponse.Data = null;
-                    serviceResponse.Message = MessageManager.GetMessage("EX201");
+                    serviceResponse.Message = MessageManager.GetMessage("EX200");
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -131,8 +131,8 @@ namespace ApiEmployees.Service.EmployeesService
                 employee.UpdateEmployeeProperties(editEmployee);
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = _context.Employees.ToList();
-                serviceResponse.Message = MessageManager.GetMessage("IS104");
+                serviceResponse.Data = employee;
+                serviceResponse.Message = string.Format(MessageManager.GetMessage("IS103"), employee.Id);
             }
             catch (Exception ex)
             {
@@ -143,18 +143,18 @@ namespace ApiEmployees.Service.EmployeesService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<EmployeesModel>>> ActivateEmployees(int id)
+        public async Task<ServiceResponse<EmployeesModel>> ActivateEmployees(int id)
         {
-            var serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+            var serviceResponse = new ServiceResponse<EmployeesModel>();
 
             try
             {
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (employee == null)
                 {
                     serviceResponse.Data = null;
-                    serviceResponse.Message = MessageManager.GetMessage("EX201");
+                    serviceResponse.Message = MessageManager.GetMessage("EX200");
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -162,7 +162,7 @@ namespace ApiEmployees.Service.EmployeesService
 
                 if (employee.Status == Status.Active)
                 {
-                    serviceResponse.Message = MessageManager.GetMessage("EX204");
+                    serviceResponse.Message = string.Format(MessageManager.GetMessage("EX203"), employee.Id);
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -171,8 +171,8 @@ namespace ApiEmployees.Service.EmployeesService
                 employee.ActivateEmployeeProperties();
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = _context.Employees.ToList();
-                serviceResponse.Message = MessageManager.GetMessage("IS106");
+                serviceResponse.Data = employee;
+                serviceResponse.Message = string.Format(MessageManager.GetMessage("IS104"), employee.Id);
             }
             catch (Exception ex)
             {
@@ -183,18 +183,18 @@ namespace ApiEmployees.Service.EmployeesService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<EmployeesModel>>> DeactivateEmployees(int id)
+        public async Task<ServiceResponse<EmployeesModel>> DeactivateEmployees(int id)
         {
-            var serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+            var serviceResponse = new ServiceResponse<EmployeesModel>();
 
             try
             {
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (employee == null)
                 {
                     serviceResponse.Data = null;
-                    serviceResponse.Message = MessageManager.GetMessage("EX201");
+                    serviceResponse.Message = MessageManager.GetMessage("EX200");
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -202,7 +202,7 @@ namespace ApiEmployees.Service.EmployeesService
 
                 if (employee.Status == Status.Inactive)
                 {
-                    serviceResponse.Message = MessageManager.GetMessage("EX203");
+                    serviceResponse.Message = string.Format(MessageManager.GetMessage("EX202"), employee.Id);
                     serviceResponse.Success = false;
 
                     return serviceResponse;
@@ -211,8 +211,8 @@ namespace ApiEmployees.Service.EmployeesService
                 employee.DeactivateEmployeeProperties();
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = _context.Employees.ToList();
-                serviceResponse.Message = MessageManager.GetMessage("IS103");
+                serviceResponse.Data = employee;
+                serviceResponse.Message = string.Format(MessageManager.GetMessage("IS105"), employee.Id);
             }
             catch (Exception ex)
             {
@@ -223,28 +223,28 @@ namespace ApiEmployees.Service.EmployeesService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<EmployeesModel>>> DeleteEmployees(int id)
+        public async Task<ServiceResponse<EmployeesModel>> DeleteEmployees(int id)
         {
-            var serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+            var serviceResponse = new ServiceResponse<EmployeesModel>();
 
             try
             {
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (employee == null)
                 {
                     serviceResponse.Data = null;
-                    serviceResponse.Message = MessageManager.GetMessage("EX201");
+                    serviceResponse.Message = MessageManager.GetMessage("EX200");
                     serviceResponse.Success = false;
 
                     return serviceResponse;
                 }
 
-                employee.DeleteEmployeeProperties();
+                _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = _context.Employees.ToList();
-                serviceResponse.Message = MessageManager.GetMessage("IS105");
+                serviceResponse.Data = employee;
+                serviceResponse.Message = string.Format(MessageManager.GetMessage("IS106"), employee.Id);
             }
             catch (Exception ex)
             {

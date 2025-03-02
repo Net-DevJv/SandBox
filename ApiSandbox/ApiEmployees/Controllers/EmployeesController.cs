@@ -37,33 +37,32 @@ namespace ApiEmployees.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> UpdateEmployees(EmployeesModel editEmployee)
+        public async Task<ActionResult<ServiceResponse<EmployeesModel>>> UpdateEmployees(EmployeesModel editEmployee)
         {
-            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeesService.UpdateEmployees(editEmployee);
-
+            ServiceResponse<EmployeesModel> serviceResponse = await _employeesService.UpdateEmployees(editEmployee);
             return Ok(serviceResponse);
         }
 
         [HttpPut("Activate")]
-        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> ActivateEmployees(int id)
+        public async Task<ActionResult<ServiceResponse<EmployeesModel>>> ActivateEmployees(int id)
         {
-            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeesService.ActivateEmployees(id);
+            ServiceResponse<EmployeesModel> serviceResponse = await _employeesService.ActivateEmployees(id);
 
             return Ok(serviceResponse);
         }
 
         [HttpPut("Deactivate")]
-        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> DeactivateEmployees(int id)
+        public async Task<ActionResult<ServiceResponse<EmployeesModel>>> DeactivateEmployees(int id)
         {
-            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeesService.DeactivateEmployees(id);
+            ServiceResponse<EmployeesModel> serviceResponse = await _employeesService.DeactivateEmployees(id);
 
             return Ok(serviceResponse);
         }
 
         [HttpDelete("Delete")]
-        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> DeleteEmployees(int id)
+        public async Task<ActionResult<ServiceResponse<EmployeesModel>>> DeleteEmployees(int id)
         {
-            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeesService.DeleteEmployees(id);
+            ServiceResponse<EmployeesModel> serviceResponse = await _employeesService.DeleteEmployees(id);
 
             return Ok(serviceResponse);
         }
