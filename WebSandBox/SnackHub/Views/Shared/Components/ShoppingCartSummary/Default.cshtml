@@ -1,0 +1,15 @@
+﻿@model ShoppingCartViewModel
+
+<a class="nav-link text-light position-relative" asp-controller="ShoppingCart" asp-action="Index">
+    <!-- Ícone do carrinho usando Bootstrap Icons -->
+    <i class="bi bi-cart4" style="font-size: 1.2rem;"></i>
+
+    @if (Model.ShoppingCart.CartItems.Count > 0)
+    {
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            @Model.ShoppingCart.CartItems.Count
+        </span>
+    }
+
+    <span class="ms-1">Carrinho</span>
+</a>
