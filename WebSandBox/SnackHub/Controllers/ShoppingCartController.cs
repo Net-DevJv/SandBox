@@ -7,51 +7,56 @@ namespace SnackHub.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private readonly ISnacksRepository _snacksRepository;
-        private readonly ShoppingCartModel _shoppingCart;
+        private readonly IProductRepository _productRepository;
+        private readonly ShoppingCart _shoppingCart;
 
-        public ShoppingCartController(ISnacksRepository snacksRepository, ShoppingCartModel shoppingCartModel)
+        public ShoppingCartController(IProductRepository productRepository, ShoppingCart shoppingCart)
         {
-            _snacksRepository = snacksRepository;
-            _shoppingCart = shoppingCartModel;
+            _productRepository = productRepository;
+            _shoppingCart = shoppingCart;
         }
 
         public IActionResult Index()
         {
-            var itens = _shoppingCart.GetCartItems();
-            _shoppingCart.CartItems = itens;
+            var cartItems = _shoppingCart.GetCartItems();
+            _shoppingCart.Items = cartItems;
+
+            var cartItemViewModels = cartItems.Select(ci => CartItemViewModel.CreateItem(ci)).ToList();
 
             var shoppingCartVM = new ShoppingCartViewModel
             {
-                ShoppingCart = _shoppingCart,
-                ShoppingCartAmount = _shoppingCart.GetShoppingCartAmount()
+                Items = cartItemViewModels,
+                Subtotal = _shoppingCart.GetShoppingCartAmount()
             };
 
             return View(shoppingCartVM);
         }
 
-        public IActionResult AddItemToShoppingCart(int snackId)
+        [HttpPost]
+        public IActionResult AddItemToShoppingCart(int productId)
         {
-            var selectedSnack = _snacksRepository.Snacks.FirstOrDefault(p => p.SnackId == snackId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
 
-            if (selectedSnack != null)
+            if (selectedProduct != null)
             {
-                _shoppingCart.AddToCart(selectedSnack);
+                _shoppingCart.AddItemToCart(selectedProduct);
             }
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult RemoveItemToShoppingCart(int snackId)
+        [HttpPost]
+        public IActionResult RemoveItemFromShoppingCart(int productId)
         {
-            var selectedSnack = _snacksRepository.Snacks.FirstOrDefault(p => p.SnackId == snackId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
 
-            if (selectedSnack != null)
+            if (selectedProduct != null)
             {
-                _shoppingCart.RemoveToCart(selectedSnack);
+                _shoppingCart.RemoveItemFromCart(selectedProduct);
             }
 
             return RedirectToAction("Index");
         }
+
     }
 }

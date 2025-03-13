@@ -1,58 +1,50 @@
 ﻿@model ShoppingCartViewModel
 
-<div class="container">
-    <div class="row">
-        <div>
-            <h4>Carrinho de compras</h4>
-        </div>
+@{
+    ViewData["Title"] = "Carrinho de compras da SnackHub";
+}
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Quantidade</th>
-                    <th>Lanche</th>
-                    <th class="text-right">Preço</th>
-                    <th class="text-right">Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in Model.ShoppingCart.CartItems)
-                {
-                    <tr>
-                        <td class="text-center">@item.Amount</td>
-                        <td class="text-left">@item.Snack.SnackName</td>
-                        <td class="text-right">@item.Snack.Price.ToString("c")</td>
-                        <td class="text-right">@((item.Amount * item.Snack.Price).ToString("c"))</td>
-                        <td class="text-center">
-                            <a 
-                                asp-controller="ShoppingCart" 
-                                asp-action="RemoveItemToShoppingCart" 
-                                asp-route-snackId="@item.Snack.SnackId" 
-                                class="btn btn-outline-danger btn-sm">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right">Total:</td>
-                    <td class="text-right">@Model.ShoppingCartAmount.ToString("c")</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-
-        </table>
-
-        <div class="text-right">
-            <div class="btn-group">
-                <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Fechar pedido</a>
-                <a class="btn btn-primary" asp-controller="Snack" asp-action="List">Continuar comprando</a>
-            </div>
-        </div>
+@if (!Model.Items.Any())
+{
+    <div class="empty-cart-message">
+        <h4>Seu carrinho da SnackHub está vazio</h4>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-snackhub">
+            Continuar comprando
+        </a>
     </div>
-</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Price * item.Quantity).ToString("C")</td>
+                    <td>
+                        <form method="post" asp-controller="ShoppingCart" asp-action="RemoveItemFromShoppingCart">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-danger">Remover</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <strong>Total:</strong> @Model.Subtotal.ToString("C")
+    </div>
+}

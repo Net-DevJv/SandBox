@@ -4,8 +4,8 @@ namespace SnackHub.ViewModels
 {
     public class ShoppingCartViewModel
     {
-        public ShoppingCartModel ShoppingCart { get; set; }
+        public List<CartItemViewModel> Items { get; set; } = new List<CartItemViewModel>();
 
-        public decimal ShoppingCartAmount { get; set; }
+        public decimal Subtotal { get; set; }
     }
 }

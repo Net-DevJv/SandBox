@@ -1,45 +1,79 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+<!-- head-start -->
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]SnackHub.com.br | Seu lanche a um clice.</title>
-
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/img/logo/LogoSite.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SnackHub.styles.css" asp-append-version="true" />
-    <link rel="icon" type="image/jpeg" href="~/img/logo/IconeSite.jpg" />
+    <link rel="stylesheet" href="~/css/LayoutStyles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
+
+<!-- body-start -->
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SnackHub</a>
+        <div style="background-color: #111b25;">
+            <div class="container-fluid d-flex align-items-center" style="flex-wrap: nowrap;">
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <!-- Bloco Esquerda -->
+                <div class="d-flex align-items-center" style="flex-wrap: nowrap;">
 
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    @await Component.InvokeAsync("ShoppingCartSummary")
-                    @await Component.InvokeAsync("CategoryMenu")
-                    @* <a class="nav-link text-light" asp-area="" asp-controller="Snack" asp-action="List">Lanches</a> *@
+                    <!-- Seção 1 -->
+                    <div class="white-hover-border">
+                        @await Html.PartialAsync("_SideMenu")
+                    </div>
 
-                    <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contato</a>
+                    <!-- Seção 2 -->
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                            <span style="font-size: 1.5rem; font-weight: bold;">
+                                <span style="color: #FCFEFB;">Snack</span><span style="color: #FD862A;">Hub</span><span style="color: #FCFEFB; font-size: 1rem;">.com</span>
+                            </span>
+                        </a>
+                    </div>
 
-                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <!-- Seção 3 -->
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                            <span style="font-size: 1.5rem; font-weight: bold;">
+                                <span style="color: #FCFEFB;">Snack</span><span style="color: #FD862A;">Hub</span><span style="color: #FCFEFB; font-size: 1rem;">.com</span>
+                            </span>
+                        </a>
+                    </div>
 
-                    <form class="navbar-form navbar-right" asp-controller="Snack" asp-action="Search" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Procurar produto" name="searchString" value="@ViewData["searchString"]" />
-                        </div>
-                    </form>
                 </div>
+
+                <!-- Bloco Central (flex:1) para ocupar espaço restante -->
+                <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="min-width: 420px;">
+                    @await Html.PartialAsync("_Search")
+                </div>
+
+                <!-- Bloco Direito -->
+                <div class="d-flex align-items-center">
+
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                            <span style="font-size: 1.5rem; font-weight: bold;">
+                                <span style="color: #FCFEFB;">Snack</span><span style="color: #FD862A;">Hub</span><span style="color: #FCFEFB; font-size: 1rem;">.com</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="white-hover-border">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </div>
+                </div>
+
             </div>
-        </nav>
+        </div>
     </header>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -47,13 +81,16 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - SnackHub</a>
+        <div class="container-fluid text-center text-light" style="background-color: #232F3F;">
+            &copy; 2025 - SnackHub
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_Scripts")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

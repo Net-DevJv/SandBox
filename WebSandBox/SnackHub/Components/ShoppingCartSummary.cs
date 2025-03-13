@@ -1,27 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SnackHub.Models;
+﻿using SnackHub.Models;
 using SnackHub.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SnackHub.Components
 {
     public class ShoppingCartSummary : ViewComponent
     {
-        private readonly ShoppingCartModel _shoppingCart;
+        private readonly ShoppingCart _shoppingCart;
 
-        public ShoppingCartSummary(ShoppingCartModel shoppingCart)
+        public ShoppingCartSummary(ShoppingCart shoppingCart)
         {
             _shoppingCart = shoppingCart;
         }
 
         public IViewComponentResult Invoke()
         {
-            var itens = _shoppingCart.GetCartItems();
-            _shoppingCart.CartItems = itens;
+            var cartItems = _shoppingCart.GetCartItems();
+            _shoppingCart.Items = cartItems;
+
+            var cartItemViewModels = cartItems.Select(ci => CartItemViewModel.CreateItem(ci)).ToList();
 
             var shoppingCartVM = new ShoppingCartViewModel
             {
-                ShoppingCart = _shoppingCart,
-                ShoppingCartAmount = _shoppingCart.GetShoppingCartAmount()
+                Items = cartItemViewModels,
+                Subtotal = _shoppingCart.GetShoppingCartAmount()
             };
 
             return View(shoppingCartVM);

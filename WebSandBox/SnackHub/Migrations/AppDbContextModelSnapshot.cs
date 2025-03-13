@@ -2,20 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SnackHub.AppDbContext;
+using SnackHub.AppContext;
 
 #nullable disable
 
 namespace SnackHub.Migrations
 {
-    [DbContext(typeof(WebAppDbContext))]
-    [Migration("20250306192029_ChangeCartItemIdToString")]
-    partial class ChangeCartItemIdToString
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +21,7 @@ namespace SnackHub.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SnackHub.Models.CartItemModel", b =>
+            modelBuilder.Entity("SnackHub.Models.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
@@ -32,7 +29,10 @@ namespace SnackHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
-                    b.Property<int>("Amount")
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
@@ -40,17 +40,14 @@ namespace SnackHub.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("SnackId")
-                        .HasColumnType("int");
-
                     b.HasKey("CartItemId");
 
-                    b.HasIndex("SnackId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("SnackHub.Models.CategoryModel", b =>
+            modelBuilder.Entity("SnackHub.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -58,12 +55,12 @@ namespace SnackHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
-                    b.Property<string>("CategoryDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -73,21 +70,21 @@ namespace SnackHub.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SnackHub.Models.SnackModel", b =>
+            modelBuilder.Entity("SnackHub.Models.Product", b =>
                 {
-                    b.Property<int>("SnackId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SnackId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageThumbnailUrl")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -97,49 +94,41 @@ namespace SnackHub.Migrations
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPreferredSnack")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10, 2)");
-
-                    b.Property<string>("ProductDescription")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("ProductSummary")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("SnackName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("SnackId");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10, 2)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Snacks");
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SnackHub.Models.CartItemModel", b =>
+            modelBuilder.Entity("SnackHub.Models.CartItem", b =>
                 {
-                    b.HasOne("SnackHub.Models.SnackModel", "Snack")
+                    b.HasOne("SnackHub.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("SnackId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Snack");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("SnackHub.Models.SnackModel", b =>
+            modelBuilder.Entity("SnackHub.Models.Product", b =>
                 {
-                    b.HasOne("SnackHub.Models.CategoryModel", "Category")
-                        .WithMany("Snack")
+                    b.HasOne("SnackHub.Models.Category", "Category")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -147,9 +136,9 @@ namespace SnackHub.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SnackHub.Models.CategoryModel", b =>
+            modelBuilder.Entity("SnackHub.Models.Category", b =>
                 {
-                    b.Navigation("Snack");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

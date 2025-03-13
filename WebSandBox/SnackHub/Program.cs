@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using SnackHub.AppDbContext;
 using SnackHub.Models;
+using SnackHub.AppContext;
 using SnackHub.Repositories;
+using ReflectionIT.Mvc.Paging;
+using Microsoft.EntityFrameworkCore;
 using SnackHub.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,17 +10,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<WebAppDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString"));
 });
 
-builder.Services.AddTransient<ISnacksRepository, SnacksRepository>();
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped(sp => ShoppingCartModel.GetCart(sp));
+builder.Services.AddScoped(sc => ShoppingCart.GetOrCreateCart(sc));
+
+builder.Services.AddPaging(options =>
+{
+    options.ViewName = "Bootstrap4";
+    options.PageParameterName = "pageindex";
+});
+
 
 builder.Services.AddMemoryCache();
 
@@ -36,19 +42,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseSession();
 
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "categoryFilter",
-    pattern: "Snack/{action}/{category?}",
-    defaults: new {Controller = "Snack", Action = "List"});
 
 app.MapControllerRoute(
     name: "default",

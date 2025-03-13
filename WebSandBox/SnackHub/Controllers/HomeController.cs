@@ -1,27 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SnackHub.Repositories.Interfaces;
+﻿using System.Diagnostics;
 using SnackHub.ViewModels;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using SnackHub.Repositories.Interfaces;
 
 namespace SnackHub.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ISnacksRepository _snacksRepository;
+    private readonly IProductRepository _productRepository;
 
-    public HomeController(ISnacksRepository snacksRepository)
+    public HomeController(IProductRepository productRepository)
     {
-        _snacksRepository = snacksRepository;
+        _productRepository = productRepository;
     }
 
     public IActionResult Index()
     {
-        var homeViewModel = new HomeViewModel
-        {
-            FavoriteSnacks = _snacksRepository.FavoriteSnacks
-        };
-
-        return View(homeViewModel);
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
