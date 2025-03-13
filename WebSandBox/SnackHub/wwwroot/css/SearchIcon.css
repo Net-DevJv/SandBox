@@ -1,0 +1,25 @@
+﻿/* SearchIcon.css */
+
+.btn-search {
+    background-color: #febd6b;
+    color: #555651;
+    border: 3px solid transparent;
+    border-radius: 4px;
+    padding: 6px 10px;
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+    /* Ao passar o mouse */
+    .btn-search:hover {
+        background-color: #d4d4d4;
+        color: #000;
+        border-color: #ff9900;
+    }
+
+    /* Ao focar/clique */
+    .btn-search:focus,
+    .btn-search:active {
+        outline: none;
+        box-shadow: none;
+        border-color: #ff9900;
+    }

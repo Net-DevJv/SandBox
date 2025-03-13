@@ -1,43 +1,120 @@
-﻿<button type="button" style="background-color: #111b25; color: #fff; border: 2px solid transparent; border-radius: 6px; padding: 8px 10px; font-size: 1.6rem; line-height: 1; box-sizing: border-box;" data-bs-toggle="offcanvas" data-bs-target="#sideMenu" aria-controls="sideMenu">
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    // Verifica se o usuário está logado
+    var isAuthenticated = User.Identity.IsAuthenticated;
+
+    // Nome padrão e userType default (se não logado)
+    string userName = "faça seu login";
+    int userTypeInt = -1; // -1 = não logado
+
+    if (isAuthenticated)
+    {
+        // Recupera o nome (caso tenha definido em ClaimTypes.Name)
+        userName = User.Identity.Name ?? "Usuário";
+
+        // Recupera o userType (caso tenha definido como "UserType")
+        var userTypeClaim = User.Claims.FirstOrDefault(c => c.Type == "UserType");
+        if (userTypeClaim != null)
+        {
+            userTypeInt = int.Parse(userTypeClaim.Value);
+        }
+    }
+
+    // Título que será exibido no topo do menu
+    // Se não estiver logado, "Olá, faça seu login"
+    // Se for user normal (0), "Olá, [Nome]"
+    // Se for admin (1), "Olá Admin, [Nome]"
+    string titulo;
+    if (!isAuthenticated)
+    {
+        titulo = "Olá, faça seu login";
+    }
+    else
+    {
+        if (userTypeInt == 1)
+        {
+            // Admin
+            titulo = $"Olá Admin, {userName}";
+        }
+        else
+        {
+            // Usuário normal
+            titulo = $"Olá, {userName}";
+        }
+    }
+}
+
+<!-- Botão que abre o offcanvas -->
+<button type="button"
+        style="background-color: #111b25; color: #fff; border: 2px solid transparent;
+               border-radius: 6px; padding: 8px 10px; font-size: 1.6rem;
+               line-height: 1; box-sizing: border-box;"
+        data-bs-toggle="offcanvas" data-bs-target="#sideMenu" aria-controls="sideMenu">
     <i class="bi bi-list"></i>
 </button>
 
-
+<!-- Offcanvas (menu lateral) -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu" aria-labelledby="sideMenuLabel">
     <div class="offcanvas-header" style="background-color: #232f3e;">
         <h5 class="offcanvas-title text-white" id="sideMenuLabel">
-            <i class="bi bi-person-circle"></i> Olá, João
+            <i class="bi bi-person-circle"></i> @titulo
         </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="background-color: white" ;></button>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close" style="background-color: white;"></button>
     </div>
 
     <div class="offcanvas-body">
+        <!-- Seção DESTAQUES (sempre) -->
         <h6 class="fw-bold">DESTAQUES</h6>
         <ul class="list-unstyled side-menu">
             <li><a href="#">Mais Vendidos</a></li>
             <li><a href="#">Novidades na SnackHub</a></li>
             <li><a href="#">Produtos em alta</a></li>
         </ul>
-
         <hr />
 
-        <h6 class="fw-bold">AJUDA E CONFIGURAÇÕES</h6>
-        <ul class="list-unstyled side-menu">
-            <li><a href="#">Sua Conta</a></li>
-            <li><a href="#">Ajuda</a></li>
-        </ul>
-
-        <hr />
-
-        <h6 class="fw-bold">ÁREA ADMINISTRATIVA</h6>
-        <ul class="list-unstyled side-menu">
-            <li><a href="#">Sua Conta</a></li>
-        </ul>
-
-        <hr />
-
-        <ul class="list-unstyled side-menu">
-            <li><a href="#">Sair</a></li>
-        </ul>
+        @if (!isAuthenticated)
+        {
+            <!-- (1) USUÁRIO NÃO LOGADO -->
+            <h6 class="fw-bold">AJUDA E CONFIGURAÇÕES</h6>
+            <ul class="list-unstyled side-menu">
+                <li>
+                    <!-- "Fazer Login" leva para a tela de LoginEmail (exemplo) -->
+                    <a asp-controller="Account" asp-action="LoginEmail">Fazer Login</a>
+                </li>
+                <li><a href="#">Ajuda</a></li>
+            </ul>
+        }
+        else
+        {
+            if (userTypeInt == 0)
+            {
+                <!-- (2) USUÁRIO NORMAL -->
+                <h6 class="fw-bold">AJUDA E CONFIGURAÇÕES</h6>
+                <ul class="list-unstyled side-menu">
+                    <li><a href="#">Sua Conta</a></li>
+                    <li><a href="#">Ajuda</a></li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Logout">Sair</a>
+                    </li>
+                </ul>
+            }
+            else if (userTypeInt == 1)
+            {
+                <!-- (3) ADMIN -->
+                <h6 class="fw-bold">ÁREA ADMINISTRATIVA</h6>
+                <ul class="list-unstyled side-menu">
+                    <li><a href="#">Sua Conta</a></li>
+                    <!-- Outros links administrativos -->
+                </ul>
+                <hr />
+                <ul class="list-unstyled side-menu">
+                    <li>
+                        <a asp-controller="Account" asp-action="Logout">Sair</a>
+                    </li>
+                </ul>
+            }
+        }
     </div>
 </div>

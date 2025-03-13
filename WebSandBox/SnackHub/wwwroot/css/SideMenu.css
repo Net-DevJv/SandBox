@@ -1,0 +1,14 @@
+﻿.side-menu a {
+    color: #232F3F;
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+    .side-menu a:hover {
+        background-color: #f1f1f1;
+        color: #111;
+        cursor: pointer;
+    }

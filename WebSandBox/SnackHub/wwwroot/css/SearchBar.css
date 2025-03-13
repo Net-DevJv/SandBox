@@ -1,0 +1,14 @@
+﻿.form-control.search-bar {
+    border: 2px solid transparent; /* Reserva espaço para a borda, mas inicialmente transparente */
+    border-radius: 4px;
+    padding: 6px 10px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+}
+
+    .form-control.search-bar:hover,
+    .form-control.search-bar:focus {
+        border-color: #ff9900; /* Borda laranja ao passar o mouse ou ao focar */
+        outline: none;
+        box-shadow: none;
+    }

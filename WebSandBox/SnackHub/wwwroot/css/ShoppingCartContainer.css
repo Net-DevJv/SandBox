@@ -1,0 +1,36 @@
+﻿.empty-cart-message {
+    background-color: #f6f6f6; /* Fundo claro */
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 16px 0;
+    color: #111; /* Cor de texto escuro */
+    font-family: "Arial", sans-serif; /* Aproximação da fonte da Amazon */
+}
+
+    /* Título dentro do container */
+    .empty-cart-message h4 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    /* Parágrafo */
+    .empty-cart-message p {
+        margin-bottom: 16px;
+        font-size: 1rem;
+    }
+
+.btn-snackhub {
+    background-color: #ffd814; /* Amarelo semelhante */
+    color: #0f1111; /* Texto escuro */
+    border: 1px solid #fcd200; /* Borda */
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .btn-snackhub:hover {
+        background-color: #f7d12a; /* Cor de hover */
+    }

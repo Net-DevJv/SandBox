@@ -1,0 +1,31 @@
+﻿.lang-dropdown {
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: 4px;
+    position: relative;
+    display: inline-block;
+    background: none;
+}
+
+    .lang-dropdown button {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .lang-dropdown .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: auto;
+    }
+
+    .lang-dropdown:hover .dropdown-menu {
+        display: block !important;
+    }

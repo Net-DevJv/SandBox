@@ -1,0 +1,44 @@
+﻿@using System.Globalization
+
+@{
+    var cultureDisplayMap = new Dictionary<string, string>
+    {
+        { "pt-BR", "- PORTUGUÊS (BR)" },
+        { "en-US", "- ENGLISH (US)" }
+    };
+    var cultureShortMap = new Dictionary<string, string>
+    {
+        { "pt-BR", "PT-BR" },
+        { "en-US", "EN-US" }
+    };
+
+    var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+    var shortCultureName = cultureShortMap.ContainsKey(currentCulture)
+        ? cultureShortMap[currentCulture]
+        : currentCulture;
+}
+
+<div class="lang-dropdown">
+    <button type="button" style="font-weight: bold;">
+        <i class="bi bi-globe me-1"></i>
+        @shortCultureName
+        <i class="bi bi-caret-down-fill ms-1"></i>
+    </button>
+
+    <ul class="dropdown-menu">
+        @foreach (var pair in cultureDisplayMap)
+        {
+            var culture = pair.Key;
+            var displayName = pair.Value;
+            <li>
+                <form asp-controller="Language" asp-action="SetLanguage" method="post">
+                    <input type="hidden" name="culture" value="@culture" />
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                    <button type="submit" class="dropdown-item text-start">
+                        @displayName
+                    </button>
+                </form>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,9 +1,14 @@
 using SnackHub.Models;
 using SnackHub.AppContext;
+using System.Globalization;
 using SnackHub.Repositories;
 using ReflectionIT.Mvc.Paging;
+using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using SnackHub.Repositories.Interfaces;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +31,31 @@ builder.Services.AddPaging(options =>
     options.PageParameterName = "pageindex";
 });
 
-
 builder.Services.AddMemoryCache();
-
 builder.Services.AddSession();
+
+var supportedCultures = new[]
+{
+    new CultureInfo("pt-BR"),
+    new CultureInfo("en-US"),
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("pt-BR");
+
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+    });
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
 
@@ -41,11 +67,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -1,0 +1,11 @@
+﻿.white-hover-border {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    margin: 4px;
+    padding: 2px;
+    transition: border-color 0.2s;
+}
+
+    .white-hover-border:hover {
+        border-color: #fff; /* Fica branca no hover */
+    }
