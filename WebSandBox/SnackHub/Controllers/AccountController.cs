@@ -39,10 +39,11 @@ namespace SnackHub.Controllers
                 return View(model);
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+
             if (user == null)
             {
                 // Se o email não existir, redireciona para o cadastro, pré-preenchendo o email.
-                return RedirectToAction("RegisterNewUser", new { email = model.Email });
+                return RedirectToAction("RegisterPrompt", new { email = model.Email });
             }
             else
             {
@@ -100,10 +101,11 @@ namespace SnackHub.Controllers
                 return View(model);
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+
             if (user != null)
             {
                 // Se o usuário já existe, redireciona para a tela de inserir senha.
-                return RedirectToAction("LoginPassword", new { email = model.Email, fromRegister = true });
+                return RedirectToAction("LoginPassword", new { email = model.Email });
             }
 
             // Cria um novo usuário
@@ -112,7 +114,7 @@ namespace SnackHub.Controllers
                 Email = model.Email,
                 FullName = model.FullName,
                 PasswordHash = HashPassword(model.Password),
-                UserType = UserType.Normal  // ou 0, se preferir
+                UserType = UserType.Normal
             };
 
             _context.Users.Add(newUser);
@@ -165,5 +167,13 @@ namespace SnackHub.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
+
+        [HttpGet]
+        public IActionResult RegisterPrompt(string email)
+        {
+            var promptModel = new RegisterPromptViewModel { Email = email };
+            return View(promptModel);
+        }
+
     }
 }

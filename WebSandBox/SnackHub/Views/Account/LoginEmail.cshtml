@@ -1,26 +1,26 @@
 ﻿@model LoginEmailViewModel
 @{
-    Layout = "_LoginLayout";  // Usa o layout especial para login
+    Layout = "_AccountLayout";  // Usa o layout especial para login
     ViewData["Title"] = "Login - Insira seu e-mail";
 }
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
     <div class="row" style="width: 100%; max-width: 400px;">
-        <div class="col bg-white p-4 rounded shadow-sm">
-            <h3 class="mb-3">Faça login ou crie uma conta</h3>
-            <p>Insira um e-mail</p>
+        <div class="col bg-white p-4 shadow-sm  rounded-3">
+            <h3 class="mb-3 fw-bold text-center" style="font-size: 1.5rem;">Faça login ou crie uma conta</h3>
+
+            <p class="fw-bold mb-1" style="font-size: 0.9rem;">Insira um e-mail</p>
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            @using (Html.BeginForm("LoginEmail", "Account", FormMethod.Post, new { @class = "mb-3" }))
+            @using (Html.BeginForm("LoginEmail", "Account", FormMethod.Post, new { @class = "mb-2" }))
             {
-                <div class="form-group mb-3">
-                    @Html.LabelFor(m => m.Email, "E-mail", new { @class = "form-label" })
+                <div class="form-group mb-2">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
 
-                <button type="submit" class="btn btn-warning w-100" style="font-weight: bold;">Continuar</button>
+                <button type="submit" class="btn btn-warning w-100 rounded-pill" style="font-weight: bold; margin-top: 16px;">Continuar</button>
             }
         </div>
     </div>
