@@ -1,7 +1,5 @@
-﻿<!-- Exemplo de formulário com Bootstrap 5 -->
-<form class="nav-link text-light d-flex align-items-center" style="flex: 1;" method="get" action="@Url.Action("Search", "Product")">
+﻿<form class="nav-link text-light d-flex align-items-center" style="flex: 1;" method="get" action="@Url.Action("Search", "Product")">
     <div class="input-group">
-        <!-- Botão de Categorias como parte do input-group -->
         <div class="dropdown">
             <button type="button" class="btn btn-categories dropdown-toggle">
                 Categorias
@@ -15,10 +13,8 @@
             </ul>
         </div>
 
-        <!-- Barra de Pesquisa -->
         <input class="form-control" type="search" placeholder="Pesquisar SnackHub.com.br" aria-label="Search" name="searchString" value="@ViewData["searchString"]" />
 
-        <!-- Botão de Lupa -->
         <button class="btn btn-search" type="submit" style="background-color: #febd6b;">
             <i class="bi bi-search"></i>
         </button>

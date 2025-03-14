@@ -1,7 +1,7 @@
 ﻿@model RegisterPromptViewModel
 
 @{
-    Layout = "_AccountLayout"; // se quiser layout sem navbar
+    Layout = "_AccountLayout"; 
     ViewData["Title"] = "Novo Usuário";
 }
 
@@ -19,7 +19,6 @@
 
             <p class="text-center">Vamos criar uma conta usando esse e-mail</p>
 
-            <!-- Botão que chama GET /Account/RegisterNewUser?email=xxx -->
             <form asp-action="RegisterNewUser" asp-controller="Account" method="get">
                 <input type="hidden" name="email" value="@Model.Email" />
                 <button type="submit" class="btn btn-warning w-100 rounded-pill">

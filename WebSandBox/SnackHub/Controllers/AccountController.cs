@@ -42,12 +42,10 @@ namespace SnackHub.Controllers
 
             if (user == null)
             {
-                // Se o email não existir, redireciona para o cadastro, pré-preenchendo o email.
                 return RedirectToAction("RegisterPrompt", new { email = model.Email });
             }
             else
             {
-                // Se o email existir, redireciona para a tela de inserir a senha.
                 return RedirectToAction("LoginPassword", new { email = model.Email });
             }
         }
@@ -104,11 +102,9 @@ namespace SnackHub.Controllers
 
             if (user != null)
             {
-                // Se o usuário já existe, redireciona para a tela de inserir senha.
                 return RedirectToAction("LoginPassword", new { email = model.Email });
             }
 
-            // Cria um novo usuário
             var newUser = new User
             {
                 Email = model.Email,
@@ -119,8 +115,6 @@ namespace SnackHub.Controllers
 
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
-
-            // Faz login automático após o cadastro (opcional)
             await SignInUser(newUser);
 
             return RedirectToAction("Index", "Home");
@@ -135,16 +129,12 @@ namespace SnackHub.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Métodos auxiliares:
-
-        // Gera o hash seguro da senha utilizando o PasswordHasher do ASP.NET Core Identity.
         private string HashPassword(string password)
         {
             var dummyUser = new User();
             return _passwordHasher.HashPassword(dummyUser, password);
         }
 
-        // Verifica se a senha fornecida corresponde ao hash armazenado.
         private bool VerifyPassword(string password, string storedHash)
         {
             var dummyUser = new User();
@@ -152,7 +142,6 @@ namespace SnackHub.Controllers
             return result == PasswordVerificationResult.Success;
         }
 
-        // Cria os Claims, efetua o sign-in e gera o cookie de autenticação.
         private async Task SignInUser(User user)
         {
             var claims = new List<Claim>

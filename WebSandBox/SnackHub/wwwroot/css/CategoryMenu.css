@@ -1,10 +1,8 @@
 ﻿.dropdown {
-    position: relative; /* Contêiner posicionado */
+    position: relative; 
 }
 
-/* Botão de categorias */
 .btn-categories {
-    /* Reserva espaço pra borda e define estilo */
     border: 3px solid transparent;
     border-radius: 4px;
     padding: 6px 10px;
@@ -13,39 +11,30 @@
     transition: border-color 0.2s, background-color 0.2s, color 0.2s;
 }
 
-/* Ao passar o mouse no dropdown, mostrar o menu e borda laranja */
 .dropdown:hover .dropdown-menu {
-    display: block !important; /* Força exibir no hover */
+    display: block !important; 
 }
 
 .dropdown:hover .btn-categories {
-    border-color: #ff9900; /* Borda laranja no hover */
+    border-color: #ff9900; 
 }
 
-/* Menu */
 .dropdown-menu {
-    display: none; /* Escondido por padrão */
-    position: absolute; /* Para posicionar em relação ao .dropdown */
-    top: calc(100% + 2px); /* Abaixo do botão (ajuste se quiser) */
-    left: 0; /* Alinha ao lado esquerdo do contêiner */
-    min-width: 10rem; /* Ajuste de largura mínima */
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px); 
+    left: 0; 
+    min-width: 10rem;
     border: 1px solid #616161;
     background-color: #fff;
-    z-index: 1000; /* Pra ficar acima de outros elementos */
+    z-index: 1000; 
 }
 
-/* Se quiser alinhar à direita, use:
-   right: 0; left: auto;
-   em vez de left: 0;
-*/
-
-/* Rolagem se tiver muitas opções */
 .dropdown-scroll {
     max-height: 11rem;
     overflow-y: auto;
 }
 
-/* Itens do menu */
 .dropdown-menu .dropdown-item {
     color: #000 !important;
     transition: background-color 0.2s;

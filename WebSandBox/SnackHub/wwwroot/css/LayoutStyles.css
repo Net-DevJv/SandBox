@@ -1,7 +1,6 @@
 ﻿.navbar-custom {
     background-color: #111b25;
     padding: 0.5rem 1rem;
-    /* flex-wrap: wrap; // se quiser quebrar em várias linhas */
 }
 
 .left-section, .center-section, .right-section {
@@ -9,10 +8,9 @@
     align-items: center;
 }
 
-/* Exemplo: em telas menores, reorganizar */
 @media (max-width: 992px) {
     .navbar-custom {
-        flex-wrap: wrap; /* permite quebrar linha */
+        flex-wrap: wrap;
     }
 
     .left-section, .center-section, .right-section {
