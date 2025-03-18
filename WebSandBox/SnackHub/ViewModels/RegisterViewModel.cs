@@ -4,22 +4,26 @@ namespace SnackHub.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Insira um email válido")]
+        [Display(Name = "e-mail")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [RegularExpression(@"^[^@\s]+@gmail\.com(\.br)?$", ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL006")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "O nome completo é obrigatório")]
-        [StringLength(150, ErrorMessage = "O nome completo deve ter no máximo 150 caracteres")]
+        [Display(Name = "nome completo")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [StringLength(150, MinimumLength = 10, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "A senha é obrigatória")]
+        [Display(Name = "senha")]
         [DataType(DataType.Password)]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "A senha deve ter entre 6 e 100 caracteres")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL003")]
+        [StringLength(20, MinimumLength = 5, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL008")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "A confirmação da senha é obrigatória")]
+        [Display(Name = "senha")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "As senhas não conferem")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL004")]
+        [Compare("Password", ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL005")]
         public string ConfirmPassword { get; set; }
     }
 }

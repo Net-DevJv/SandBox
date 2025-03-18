@@ -25,7 +25,7 @@ namespace SnackHub.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString, int? categoryId, bool? inStock, int page = 1, int pageSize = 3)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, bool? inStock, int page = 1, int pageSize = 10)
         {
             ViewBag.SearchString = searchString;
             ViewBag.SelectedCategoryId = categoryId;

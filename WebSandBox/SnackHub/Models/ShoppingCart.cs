@@ -97,7 +97,7 @@ namespace SnackHub.Models
 
         public decimal GetShoppingCartAmount()
         {
-            var totalAmount = _context.CartItems.Where(ci => ci.ShoppingCartId == this.CartId).Select(ci => ci.Product.Price * ci.ProductQuantity).Sum();
+            var totalAmount = _context.CartItems.Where(ci => ci.ShoppingCartId == this.CartId).Select(ci => (ci.Product.Price ?? 0m) * ci.ProductQuantity).Sum();
 
             return totalAmount;
         }

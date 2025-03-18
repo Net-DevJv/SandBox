@@ -4,8 +4,9 @@ namespace SnackHub.ViewModels
 {
     public class LoginEmailViewModel
     {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [RegularExpression(@"^[^@\s]+@gmail\.com(\.br)?$", ErrorMessage = "Insira um e-mail válido")]
+        [Display(Name = "e-mail")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [RegularExpression(@"^[^@\s]+@gmail\.com(\.br)?$", ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL006")]
         public string Email { get; set; }
     }
 }

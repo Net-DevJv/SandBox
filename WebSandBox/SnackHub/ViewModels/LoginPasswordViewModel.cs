@@ -4,12 +4,14 @@ namespace SnackHub.ViewModels
 {
     public class LoginPasswordViewModel
     {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Insira um email válido")]
+        [Display(Name = "e-mail")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [RegularExpression(@"^[^@\s]+@gmail\.com(\.br)?$", ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL006")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "A senha é obrigatória")]
+        [Display(Name = "senha")]
         [DataType(DataType.Password)]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL003")]
         public string Password { get; set; }
     }
 }

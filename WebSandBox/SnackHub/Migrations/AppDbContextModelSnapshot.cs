@@ -45,7 +45,7 @@ namespace SnackHub.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("SnackHub.Models.Category", b =>
@@ -68,7 +68,7 @@ namespace SnackHub.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("SnackHub.Models.Product", b =>
@@ -108,7 +108,7 @@ namespace SnackHub.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SnackHub.Models.User", b =>
@@ -138,7 +138,7 @@ namespace SnackHub.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("SnackHub.Models.CartItem", b =>

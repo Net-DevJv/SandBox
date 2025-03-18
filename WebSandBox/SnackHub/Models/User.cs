@@ -10,16 +10,19 @@ namespace SnackHub.Models
         [Key]
         public int UserId { get; set; }
 
-        [Required(ErrorMessage = "* Insira seu endereço de e-mail")]
         [EmailAddress]
-        [StringLength(256, ErrorMessage = "O email deve ter no máximo 256 caracteres.")]
+        [Display(Name = "e-mail")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL010")]
+        [StringLength(256, MinimumLength = 10, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "* Insira seu nome e sobrenome")]
-        [StringLength(150, ErrorMessage = "O nome completo deve ter no máximo 150 caracteres.")]
+        [Display(Name = "nome e sobrenome")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL010")]
+        [StringLength(150, MinimumLength = 10, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "* Insira sua senha")]
+        [Display(Name = "senha")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL009")]
         public string PasswordHash { get; set; }
 
         [Required]

@@ -18,7 +18,7 @@ namespace SnackHub.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? categoryId, int page = 1, int pageSize = 3)
+        public async Task<IActionResult> Index(int? categoryId, int page = 1, int pageSize = 10)
         {
             ViewBag.SelectedCategoryId = categoryId;
 

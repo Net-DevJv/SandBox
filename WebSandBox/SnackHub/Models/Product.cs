@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SnackHub.Models
 {
@@ -10,27 +10,25 @@ namespace SnackHub.Models
         [Key]
         public int ProductId { get; set; }
 
-        [Required(ErrorMessage = "* O nome do produto deve ser informado!")]
-        [Display(Name = "Nome do produto")]
-        [StringLength(200, MinimumLength = 10, ErrorMessage = "* O {0} deve ter no mínimo {1} e máximo {2}")]
+        [Display(Name = "nome do produto")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [StringLength(200, MinimumLength = 10, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string Name { get; set; }
 
-        [Display(Name = "Resumo do produto")]
-        [MinLength(20, ErrorMessage = "* O resumo do produto deve ter no mínimo {1} caracteres")]
-        [MaxLength(1000, ErrorMessage = "* O resumo do produto não pode exceder {1} caracteres")]
+        [Display(Name = "resumo do produto")]
+        [StringLength(1000, MinimumLength = 20, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string? Summary { get; set; }
 
-        [Display(Name = "Descrição do produto")]
-        [MinLength(20, ErrorMessage = "* A descrição do produto deve ter no mínimo {1} caracteres")]
-        [MaxLength(1000, ErrorMessage = "* A descrição do produto não pode exceder {1} caracteres")]
+        [Display(Name = "descrição do produto")]
+        [StringLength(1000, MinimumLength = 20, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL008")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "* O preço do produto deve ser informado!")]
-        [Display(Name = "Preço do produto")]
+        [Display(Name = "preço do produto")]
         [Column(TypeName = "decimal(10, 2)")]
-        [Range(1, 999.99, ErrorMessage = "* O preço deve estar entre 1 e 999,99")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:F2}")]
-        public decimal Price { get; set; }
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL001")]
+        [Range(1, 10000.00, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL007")]
+        public decimal? Price { get; set; }
 
         [ValidateNever]
         [Display(Name = "Imagem do Produto")]

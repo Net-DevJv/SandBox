@@ -35,18 +35,14 @@ builder.Services.AddPaging(options =>
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 
-var supportedCultures = new[]
-{
-    new CultureInfo("pt-BR"),
-    new CultureInfo("en-US"),
-};
+var supportedCultures = new[] { new CultureInfo("pt-BR") };
 
-builder.Services.Configure<RequestLocalizationOptions>(options =>
+var localizationOptions = new RequestLocalizationOptions
 {
-    options.DefaultRequestCulture = new RequestCulture("pt-BR");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
+    DefaultRequestCulture = new RequestCulture("pt-BR"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

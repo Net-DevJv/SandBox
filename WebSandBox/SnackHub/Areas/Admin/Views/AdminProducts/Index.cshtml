@@ -66,7 +66,7 @@
                         <table id="myTable" class="table table-bordered table-hover align-middle text-center">
                             <thead class="table-highlight">
                                 <tr>
-                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 16%">
                                         Nome do Produto
                                         <i class="arrow-icon bi ms-1" style="display:none;"></i>
                                     </th>
@@ -83,12 +83,12 @@
                                         <i class="arrow-icon bi ms-1" style="display:none;"></i>
                                     </th>
 
-                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 7%">
                                         Em Estoque?
                                         <i class="arrow-icon bi ms-1" style="display:none;"></i>
                                     </th>
 
-                                    <th style="width: 10%;">Ações</th>
+                                    <th style="width: 8%;">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,7 +105,7 @@
                                         <tr>
                                             <td>@item.Name</td>
                                             <td>@(string.IsNullOrEmpty(item.Summary) ? "Sem resumo" : item.Summary)</td>
-                                            <td>@item.Price.ToString("C")</td>
+                                            <td>@item.Price?.ToString("C")</td>
                                             <td>@(item.Category?.Name ?? "Sem Categoria")</td>
                                             <td>@(item.InStock ? "Sim" : "Não")</td>
                                             <td>

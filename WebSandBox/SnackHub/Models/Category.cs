@@ -9,15 +9,14 @@ namespace SnackHub.Models
         [Key]
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "* O nome da categoria deve ser informado!")]
-        [Display(Name = "Nome da Categoria")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "* O {0} deve ter no mínimo {1} e máximo {2} caracteres!")]
+        [Display(Name = "nome da categoria")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL011")]
+        [StringLength(50, MinimumLength = 5, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL002")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "* A descrição da categoria deve ser informada!")]
-        [Display(Name = "Descrição da Categoria")]
-        [MinLength(20, ErrorMessage = "* A descrição da categoria deve ter no mínimo {1} caracteres!")]
-        [MaxLength(500, ErrorMessage = "* A descrição da categoria não pode exceder {1} caracteres!")]
+        [Display(Name = "descrição da categoria")]
+        [Required(ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL003")]
+        [StringLength(500, MinimumLength = 20, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL008")]
         public string Description { get; set; }
 
         public List<Product> Products { get; set; } = new List<Product>();
