@@ -1,7 +1,7 @@
 ﻿.lang-dropdown {
     border: none;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 8px 8px;
     margin: 4px;
     position: relative;
     display: inline-block;
@@ -22,10 +22,22 @@
         display: none;
         position: absolute;
         top: 100%;
-        right: 0;
+        right: -9px;
         left: auto;
+        background-color: #232F3F !important;
+        color: #fff !important;
+        border-radius: 6px !important;
     }
 
     .lang-dropdown:hover .dropdown-menu {
         display: block !important;
     }
+
+    .lang-dropdown .dropdown-item {
+        color: #fff !important;
+    }
+
+        .lang-dropdown .dropdown-item:hover {
+            background-color: #fff !important;
+            color: #000 !important;
+        }

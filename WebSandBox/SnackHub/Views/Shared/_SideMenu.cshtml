@@ -77,7 +77,7 @@
             {
                 <h6 class="fw-bold">AJUDA E CONFIGURAÇÕES</h6>
                 <ul class="list-unstyled side-menu">
-                    <li><a href="#">Sua Conta</a></li>
+                    <li><a href="#">Acessar Conta</a></li>
                     <li><a href="#">Ajuda</a></li>
                     <li>
                         <a asp-controller="Account" asp-action="Logout">Sair</a>
@@ -88,7 +88,9 @@
             {
                 <h6 class="fw-bold">ÁREA ADMINISTRATIVA</h6>
                 <ul class="list-unstyled side-menu">
-                    <li><a href="#">Sua Conta</a></li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Admin" asp-action="Index">Acessar Conta</a>
+                    </li>
                 </ul>
                 <hr />
                 <ul class="list-unstyled side-menu">

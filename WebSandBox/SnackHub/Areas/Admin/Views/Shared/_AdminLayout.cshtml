@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<!-- head-start -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/img/logo/LogoSite.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SnackHub.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/LayoutStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/LanguageSelector.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/IconBorders.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adminNavigationMenus.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header>
+        <nav style="background-color: #111b25;">
+            <div class="navbar-custom d-flex align-items-center flex-wrap">
+                <div class="left-section d-flex align-items-center flex-wrap">
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center" asp-controller="Admin" asp-action="Index">
+                            <span style="font-size: 1.4rem; font-weight: bold;">
+                                <i class="bi bi-house-door" style="color: #FD862A;"></i>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center position-relative" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index" style="text-decoration: none;">
+                            <span class="position-relative" style="display: inline-block;">
+                                <i class="bi bi-tags" style="font-size: 1.2rem;"></i>
+                            </span>
+                            <span class="ms-1 fw-bold">Gerenciar Categorias</span>
+                        </a>
+                    </div>
+
+                    <div class="white-hover-border">
+                        <a class="nav-link text-light d-flex align-items-center position-relative" asp-area="Admin" asp-controller="AdminProducts" asp-action="Index" style="text-decoration: none;">
+                            <span class="position-relative" style="display: inline-block;">
+                                <i class="bi bi-box-seam" style="font-size: 1.2rem;"></i>
+                            </span>
+                            <span class="ms-1 fw-bold">Gerenciar Produtos</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="center-section flex-grow-1 d-flex justify-content-center">
+
+                </div>
+
+                <div class="right-section d-flex align-items-center">
+                    <div class="white-hover-border">
+
+                    </div>
+
+                    <div class="white-hover-border">
+                        @await Html.PartialAsync("_LanguageSelector")
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top footer text-muted">
+        @{
+            var currentController = (string)ViewContext.RouteData.Values["controller"];
+            var currentAction = (string)ViewContext.RouteData.Values["action"];
+            bool isAdminHome = (currentController == "Admin" && currentAction == "Index");
+        }
+
+        @if (isAdminHome)
+        {
+            <div class="container-fluid text-center text-light" style="background-color: #232F3F; font-size: 1.5rem;">
+                <a asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index"
+                   class="text-light text-decoration-none">
+                    <i class="bi bi-box-arrow-left me-1"></i>
+                    Voltar ao site público
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="container-fluid text-center text-light" style="background-color: #232F3F; font-size: 1.4rem;">
+                &copy; 2025 - SnackHub
+            </div>
+        }
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

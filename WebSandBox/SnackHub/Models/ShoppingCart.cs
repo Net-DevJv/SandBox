@@ -35,10 +35,7 @@ namespace SnackHub.Models
 
         public List<CartItem> GetCartItems()
         {
-            return Items ?? (Items = _context.CartItems
-                .Where(ci => ci.ShoppingCartId == this.CartId)
-                .Include(ci => ci.Product)
-                .ToList());
+            return Items ?? (Items = _context.CartItems.Where(ci => ci.ShoppingCartId == this.CartId).Include(ci => ci.Product).ToList());
         }
 
         public void AddItemToCart(Product product)
@@ -100,10 +97,7 @@ namespace SnackHub.Models
 
         public decimal GetShoppingCartAmount()
         {
-            var totalAmount = _context.CartItems
-                .Where(ci => ci.ShoppingCartId == this.CartId)
-                .Select(ci => ci.Product.Price * ci.ProductQuantity)
-                .Sum();
+            var totalAmount = _context.CartItems.Where(ci => ci.ShoppingCartId == this.CartId).Select(ci => ci.Product.Price * ci.ProductQuantity).Sum();
 
             return totalAmount;
         }

@@ -1,0 +1,97 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-eye me-2" style="font-size: 1.6rem; color: #FD862A;"></i>
+                    <h4 class="card-title mb-0">Detalhes do Produto</h4>
+                </div>
+
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-auto">Nome do produto :</dt>
+                        <dd class="col-sm-9">@Model.Name</dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Resumo do produto :</dt>
+                        <dd class="col-sm-9">
+                            @(string.IsNullOrEmpty(Model.Summary) ? "Sem resumo" : Model.Summary)
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Descrição do produto :</dt>
+                        <dd class="col-sm-9">
+                            @(string.IsNullOrEmpty(Model.Description) ? "Sem resumo" : Model.Description)
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Preço do produto :</dt>
+                        <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Imagem e Url do produto :</dt>
+                        <dd class="col-sm-auto">@Model.ImageUrl</dd>
+                        <dd class="col-sm-12">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <br />
+                                <img src="@Model.ImageUrl" alt="@Model.Name" class="mx-auto d-block" style="max-width:200px;" />
+                            }
+                            else
+                            {
+                                <span>Sem imagem</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Categoria :</dt>
+                        <dd class="col-sm-9">@(Model.Category?.Name ?? "Sem categoria")</dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-auto">Em estoque? :</dt>
+                        <dd class="col-sm-9">@(Model.InStock ? "Sim" : "Não")</dd>
+                    </dl>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Retornar</a>
+                        <div>
+                            <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn btn-danger">
+                                Deletar
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-warning me-2">
+                                Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

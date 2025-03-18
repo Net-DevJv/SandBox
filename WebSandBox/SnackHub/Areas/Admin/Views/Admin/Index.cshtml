@@ -1,0 +1,27 @@
+﻿@model AdminIndexViewModel
+
+@{
+    ViewData["Title"] = "Área administrativa";
+    Layout = "_AdminLayout";
+}
+<br />
+<h2>
+    <i class="bi bi-person-gear me-2"></i>
+    Bem vindo, @Model.AdminName!
+</h2>
+<br />
+@if (Model.Notifications.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-bell-fill me-2"></i>
+            Notificações da semana
+            </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var notif in Model.Notifications)
+            {
+                <li class="list-group-item">@notif</li>
+            }
+        </ul>
+    </div>
+}

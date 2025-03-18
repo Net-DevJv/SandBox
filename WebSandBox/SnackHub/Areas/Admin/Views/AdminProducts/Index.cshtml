@@ -1,0 +1,160 @@
+﻿@model X.PagedList.IPagedList<Product>
+
+@{
+    ViewData["Title"] = "Gerenciamento de Produtos";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-box-seam me-2" style="font-size: 1.6rem; color: #FD862A;"></i>
+                    <h4 class="card-title mb-0">Gerenciamento de Produtos</h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="get" asp-action="Index" class="row mb-3 justify-content-center">
+                        <div class="col-3">
+                            <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Procurar produtos..." />
+                        </div>
+
+                        <div class="col-auto">
+                            <select name="categoryId" asp-items="ViewBag.Categories" class="form-select">
+                                <option value="">Todas as categorias</option>
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <select name="inStock" class="form-select w-auto">
+                                <option value="">Em Estoque?</option>
+
+                                @if (ViewBag.InStockFilter == true)
+                                {
+                                    <option value="true" selected>Sim</option>
+                                }
+                                else
+                                {
+                                    <option value="true">Sim</option>
+                                }
+
+                                @if (ViewBag.InStockFilter == false)
+                                {
+                                    <option value="false" selected>Não</option>
+                                }
+                                else
+                                {
+                                    <option value="false">Não</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                        </div>
+                    </form>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fw-bold">
+                            Total de produtos encontrados: @Model.Count()
+                        </span>
+                        <a asp-action="Create" class="btn btn-success">Criar Produto</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered table-hover align-middle text-center">
+                            <thead class="table-highlight">
+                                <tr>
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                        Nome do Produto
+                                        <i class="arrow-icon bi ms-1" style="display:none;"></i>
+                                    </th>
+
+                                    <th>Resumo</th>
+
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                        Preço
+                                        <i class="arrow-icon bi ms-1" style="display:none;"></i>
+                                    </th>
+
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                        Categoria
+                                        <i class="arrow-icon bi ms-1" style="display:none;"></i>
+                                    </th>
+
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%">
+                                        Em Estoque?
+                                        <i class="arrow-icon bi ms-1" style="display:none;"></i>
+                                    </th>
+
+                                    <th style="width: 10%;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center">Nenhum Produto Criado</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td>@(string.IsNullOrEmpty(item.Summary) ? "Sem resumo" : item.Summary)</td>
+                                            <td>@item.Price.ToString("C")</td>
+                                            <td>@(item.Category?.Name ?? "Sem Categoria")</td>
+                                            <td>@(item.InStock ? "Sim" : "Não")</td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning" title="Editar">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-info" title="Detalhes">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger" onclick="return confirm('Deseja realmente excluir este produto?');" title="Deletar">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        @if (Model.TotalItemCount > Model.PageSize)
+                        {
+                            <nav>
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new
+                                    {
+                                        page,
+                                        searchString = ViewContext.HttpContext.Request.Query["searchString"],
+                                        categoryId = ViewContext.HttpContext.Request.Query["categoryId"],
+                                        inStock = ViewContext.HttpContext.Request.Query["inStock"]
+                                    }),
+                                         new PagedListRenderOptions
+                            {
+                                UlElementClasses = new[] { "pagination" },
+                                LiElementClasses = new[] { "page-item" },
+                                PageClasses = new[] { "page-link" },
+
+                                LinkToPreviousPageFormat = "«",
+                                LinkToNextPageFormat = "»",
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                DisplayLinkToIndividualPages = true,
+                                DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+                                MaximumPageNumbersToDisplay = 5
+                            })
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

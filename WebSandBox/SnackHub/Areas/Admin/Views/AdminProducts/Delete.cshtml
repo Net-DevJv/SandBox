@@ -1,0 +1,53 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Excluir Produto";
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-trash me-2" style="font-size: 1.6rem; color: #FD862A;"></i>
+                    <h4 class="card-title mb-0 text-danger">Excluir Produto</h4>
+                </div>
+
+                <div class="card-body">
+                    <p class="text-center text-danger fw-bold mb-4">
+                        Tem certeza de que deseja excluir este produto?<br />
+                        Esta ação não poderá ser desfeita.
+                    </p>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Nome do produto:</dt>
+                        <dd class="col-sm-9">@Model.Name</dd>
+                    </dl>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Categoria:</dt>
+                        <dd class="col-sm-9">
+                            @(Model.Category != null? Model.Category.Name: "Sem categoria")
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <form method="post" asp-action="Delete" asp-route-id="@Model.ProductId">
+                        @Html.AntiForgeryToken()
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Retornar</a>
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿.table-highlight {
+    background-color: #e3f2fd;
+}
+
+    .table-highlight th {
+        color: #000;
+    }
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+    th.sortable:hover {
+        background-color: #d0e8ff;
+    }
+
+.arrow-icon {
+    display: inline-block;
+    width: 1.2em;
+    text-align: right;
+    margin-left: 1px;
+}

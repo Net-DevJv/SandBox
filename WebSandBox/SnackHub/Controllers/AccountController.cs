@@ -22,16 +22,12 @@ namespace SnackHub.Controllers
             _passwordHasher = passwordHasher;
         }
 
-        // GET: /Account/LoginEmail
-        // Exibe a tela onde o usuário informa apenas o email.
         [HttpGet]
         public IActionResult LoginEmail()
         {
             return View();
         }
 
-        // POST: /Account/LoginEmail
-        // Verifica se o email existe; se não existir, redireciona para cadastro; se existir, redireciona para a tela de senha.
         [HttpPost]
         public async Task<IActionResult> LoginEmail(LoginEmailViewModel model)
         {
@@ -50,8 +46,6 @@ namespace SnackHub.Controllers
             }
         }
 
-        // GET: /Account/LoginPassword
-        // Exibe a tela para que o usuário insira a senha, usando o email informado.
         [HttpGet]
         public IActionResult LoginPassword(string email)
         {
@@ -62,8 +56,6 @@ namespace SnackHub.Controllers
             return View(model);
         }
 
-        // POST: /Account/LoginPassword
-        // Processa a inserção de senha e faz o login.
         [HttpPost]
         public async Task<IActionResult> LoginPassword(LoginPasswordViewModel model)
         {
@@ -73,7 +65,7 @@ namespace SnackHub.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (user == null || !VerifyPassword(model.Password, user.PasswordHash))
             {
-                ModelState.AddModelError("", "Credenciais inválidas.");
+                ModelState.AddModelError("", "Senha incorreta!");
                 return View(model);
             }
 
@@ -81,8 +73,6 @@ namespace SnackHub.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: /Account/RegisterNewUser
-        // Exibe a tela de registro para criar uma nova conta, pré-preenchida com o email.
         [HttpGet]
         public IActionResult RegisterNewUser(string email)
         {
@@ -90,8 +80,6 @@ namespace SnackHub.Controllers
             return View(model);
         }
 
-        // POST: /Account/RegisterNewUser
-        // Cria a conta se o email ainda não existir; caso exista, redireciona para a tela de senha.
         [HttpPost]
         public async Task<IActionResult> RegisterNewUser(RegisterViewModel model)
         {
@@ -120,8 +108,6 @@ namespace SnackHub.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: /Account/Logout
-        // Efetua o logout e redireciona para a página inicial.
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

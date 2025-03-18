@@ -4,8 +4,14 @@ namespace SnackHub.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> Products { get; }
+        IQueryable<Product> GetAll();
 
-        Product GetProductById(int productId);
+        Task<Product> GetProductByIdAsync(int productId);
+
+        Task AddAsync(Product product);
+
+        Task UpdateAsync(Product product);
+
+        Task DeleteAsync(int productId);
     }
 }

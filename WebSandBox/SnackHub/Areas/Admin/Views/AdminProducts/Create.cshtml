@@ -1,0 +1,72 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Criar Produto";
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-plus-square me-2" style="font-size: 1.6rem; color: #FD862A;"></i>
+                    <h4 class="card-title mb-0">Criar Produto</h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" asp-action="Create" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Digite o nome do produto..." })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Summary, new { @class = "form-label" })
+                            @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", rows = 2, placeholder = "Resumo breve do produto..." })
+                            @Html.ValidationMessageFor(m => m.Summary, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3, placeholder = "Descrição completa do produto..." })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Price, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "text", placeholder = "Preço do produto (ex.: 00,00)" })
+                            @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ImageFile" class="form-label">Imagem do Produto</label>
+                            <input type="file" name="ImageFile" class="form-control" />-->
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.CategoryId, "Selecionar categoria", new { @class = "form-label" })
+                            @Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewBag.Categories, "Selecionar categoria", new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-check mb-3">
+                            @Html.CheckBoxFor(m => m.InStock, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.InStock, "Produto disponível no estoque?", new { @class = "form-check-label ms-2" })
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Retornar</a>
+                            <button type="submit" class="btn btn-success">Criar Produto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

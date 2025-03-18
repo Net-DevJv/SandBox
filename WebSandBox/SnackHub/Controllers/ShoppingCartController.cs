@@ -35,7 +35,7 @@ namespace SnackHub.Controllers
         [HttpPost]
         public IActionResult AddItemToShoppingCart(int productId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
+            var selectedProduct = _productRepository.GetAll().FirstOrDefault(p => p.ProductId == productId);
 
             if (selectedProduct != null)
             {
@@ -48,7 +48,7 @@ namespace SnackHub.Controllers
         [HttpPost]
         public IActionResult RemoveItemFromShoppingCart(int productId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
+            var selectedProduct = _productRepository.GetAll().FirstOrDefault(p => p.ProductId == productId);
 
             if (selectedProduct != null)
             {
@@ -57,6 +57,5 @@ namespace SnackHub.Controllers
 
             return RedirectToAction("Index");
         }
-
     }
 }

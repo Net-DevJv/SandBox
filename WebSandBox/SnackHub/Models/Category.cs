@@ -11,7 +11,7 @@ namespace SnackHub.Models
 
         [Required(ErrorMessage = "* O nome da categoria deve ser informado!")]
         [Display(Name = "Nome da Categoria")]
-        [StringLength(200, MinimumLength = 10, ErrorMessage = "* O {0} deve ter no mínimo {1} e máximo {2} caracteres!")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "* O {0} deve ter no mínimo {1} e máximo {2} caracteres!")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "* A descrição da categoria deve ser informada!")]

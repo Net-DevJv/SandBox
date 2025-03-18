@@ -1,0 +1,114 @@
+﻿@model X.PagedList.IPagedList<Category>
+
+@{
+    ViewData["Title"] = "Gerenciamento de Categorias";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-tags me-2" style="font-size: 1.6rem; color: #FD862A;"></i>
+                    <h4 class="card-title mb-0">Gerenciamento de Categorias</h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="get" asp-action="Index" class="row mb-3 justify-content-center">
+                        <div class="col-auto">
+                            <select name="categoryId" asp-items="ViewBag.Categories" class="form-select">
+                                <option value="">Todas as categorias</option>
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                        </div>
+                    </form>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fw-bold">
+                            Total de categorias encontradas: @Model.Count()
+                        </span>
+                        <a asp-action="Create" class="btn btn-success">Criar Categoria</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered table-hover align-middle text-center" style="table-layout: fixed; width: 100%;">
+                            <thead class="table-highlight">
+                                <tr>
+                                    <th class="sortable" data-col="0" style="text-align:center; width: 10%;">
+                                        Nome
+                                        <i class="arrow-icon bi ms-1" style="display:none;"></i>
+                                    </th>
+                                    <th style="width: 65%;">Descrição</th>
+                                    <th style="width: 10%;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center">Nenhuma Categoria Criada</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var cat in Model)
+                                    {
+                                        <tr>
+                                            <td>@cat.Name</td>
+                                            <td style="white-space: normal; word-wrap: break-word;">
+                                                @cat.Description
+                                            </td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@cat.CategoryId" class="btn btn-sm btn-warning" title="Editar">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a asp-action="Details" asp-route-id="@cat.CategoryId" class="btn btn-sm btn-info" title="Detalhes">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@cat.CategoryId" class="btn btn-sm btn-danger"
+                                                   onclick="return confirm('Deseja realmente excluir esta categoria?');" title="Deletar">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        @if (Model.TotalItemCount > Model.PageSize)
+                        {
+                            <nav>
+                                @Html.PagedListPager(Model,page => Url.Action("Index", new
+                                {
+                                    page,
+                                    categoryId = ViewContext.HttpContext.Request.Query["categoryId"]
+                                }),
+                                new PagedListRenderOptions
+                                {
+                                    UlElementClasses = new[] { "pagination" },
+                                    LiElementClasses = new[] { "page-item" },
+                                    PageClasses = new[] { "page-link" },
+
+                                    LinkToPreviousPageFormat = "«",
+                                    LinkToNextPageFormat = "»",
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                    DisplayLinkToIndividualPages = true,
+                                    DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+                                    MaximumPageNumbersToDisplay = 5
+                                })
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
