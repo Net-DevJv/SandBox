@@ -1,15 +1,44 @@
-﻿<form class="nav-link text-light d-flex align-items-center" style="flex: 1;" method="get" action="@Url.Action("Search", "Product")">
+﻿@inject SnackHub.AppContext.AppDbContext _dbContext
+
+@{
+    var categories = _dbContext.Categories.Where(c => c.Status == CategoryStatus.Visible).ToList();
+    bool hasCategories = categories.Any();
+}
+
+<form class="nav-link text-light d-flex align-items-center" style="flex: 1;" method="get" action="@Url.Action("Search", "Product")">
     <div class="input-group">
         <div class="dropdown">
-            <button type="button" class="btn btn-categories dropdown-toggle">
+            <button type="button" class="btn btn-categories dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 Categorias
             </button>
             <ul class="dropdown-menu dropdown-scroll">
-                <li><a class="dropdown-item" href="#">Todos os departamentos</a></li>
-                <li><a class="dropdown-item" href="#">Lanches Naturais</a></li>
-                <li><a class="dropdown-item" href="#">Lanches normais</a></li>
-                <li><a class="dropdown-item" href="#">Sobremesas</a></li>
-                <li><a class="dropdown-item" href="#">Bebidas</a></li>
+
+                @if (!hasCategories)
+                {
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Home")">
+                            Todos os departamentos
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Search", "Product", new { searchString = "", categoryId = (int?)null })">
+                            Todos os departamentos
+                        </a>
+                    </li>
+
+                    @foreach (var cat in categories)
+                    {
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Search", "Product", new { searchString = "", categoryId = cat.CategoryId })">
+                                @cat.Name
+                            </a>
+                        </li>
+                    }
+                }
+
             </ul>
         </div>
 

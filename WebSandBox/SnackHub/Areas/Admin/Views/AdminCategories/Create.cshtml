@@ -30,6 +30,12 @@
                             @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label">Status da Categoria</label>
+                            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<CategoryStatus>()"></select>
+                            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                        </div>
+
                         <hr />
 
                         <div class="d-flex justify-content-between">

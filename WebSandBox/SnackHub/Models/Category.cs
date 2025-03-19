@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SnackHub.Enums;
 
 namespace SnackHub.Models
 {
@@ -19,11 +20,12 @@ namespace SnackHub.Models
         [StringLength(500, MinimumLength = 20, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL008")]
         public string Description { get; set; }
 
-        [Display(Name = "Data de criação")]
+        [Display(Name = "Status da Categoria")]
+        public CategoryStatus Status { get; set; } = CategoryStatus.Visible;
+
         [DataType(DataType.Date)]
         public DateTime? CreationDate { get; set; }
 
-        [Display(Name = "Data de atualização")]
         [DataType(DataType.Date)]
         public DateTime? UpdateDate { get; set; }
 

@@ -87,7 +87,7 @@ namespace SnackHub.Areas.Admin.Controllers
 
             existingCategory.Name = category.Name;
             existingCategory.Description = category.Description;
-
+            existingCategory.Status = category.Status;
             existingCategory.UpdateDate = DateTime.Now;
 
             try
