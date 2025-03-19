@@ -31,7 +31,14 @@
 
                     <dl class="row">
                         <dt class="col-sm-3">Status:</dt>
-                        <dd class="col-sm-9">@Model.Status</dd>
+                        <dd class="col-sm-9">
+                            @{
+                                var fieldInfo = typeof(CategoryStatus).GetField(Model.Status.ToString());
+                                var displayAttr = fieldInfo?.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>();
+                                var statusDisplay = displayAttr?.Name ?? Model.Status.ToString();
+                            }
+                            @statusDisplay
+                        </dd>
                     </dl>
 
                     <hr />

@@ -5,6 +5,7 @@
     Layout = "_AdminLayout";
 }
 
+
 <div class="container-fluid my-4">
     <div class="row">
         <div class="col-12">
@@ -53,6 +54,7 @@
                                         <i class="arrow-icon bi ms-1" style="display:none;"></i>
                                     </th>
                                     <th style="width: 65%;">Descrição</th>
+                                    <th style="width: 5%;">Status</th>
                                     <th style="width: 10%;">Ações</th>
                                 </tr>
                             </thead>
@@ -71,6 +73,14 @@
                                             <td>@cat.Name</td>
                                             <td style="white-space: normal; word-wrap: break-word;">
                                                 @cat.Description
+                                            </td>
+                                            <td style="white-space: normal; word-wrap: break-word;">
+                                                @{
+                                                    var fieldInfo = typeof(CategoryStatus).GetField(cat.Status.ToString());
+                                                    var displayAttr = fieldInfo?.GetCustomAttribute<DisplayAttribute>();
+                                                    var statusName = displayAttr?.Name ?? cat.Status.ToString();
+                                                }
+                                                @statusName
                                             </td>
                                             <td>
                                                 <a asp-action="Edit" asp-route-id="@cat.CategoryId" class="btn btn-sm btn-warning" title="Editar">
@@ -95,25 +105,25 @@
                         @if (Model.TotalItemCount > Model.PageSize)
                         {
                             <nav>
-                                @Html.PagedListPager(Model,page => Url.Action("Index", new
-                                {
-                                    page,
-                                    categoryId = ViewContext.HttpContext.Request.Query["categoryId"]
-                                }),
-                                new PagedListRenderOptions
-                                {
-                                    UlElementClasses = new[] { "pagination" },
-                                    LiElementClasses = new[] { "page-item" },
-                                    PageClasses = new[] { "page-link" },
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new
+                                    {
+                                        page,
+                                        categoryId = ViewContext.HttpContext.Request.Query["categoryId"]
+                                    }),
+                                         new PagedListRenderOptions
+                            {
+                                UlElementClasses = new[] { "pagination" },
+                                LiElementClasses = new[] { "page-item" },
+                                PageClasses = new[] { "page-link" },
 
-                                    LinkToPreviousPageFormat = "«",
-                                    LinkToNextPageFormat = "»",
-                                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                                    DisplayLinkToIndividualPages = true,
-                                    DisplayEllipsesWhenNotShowingAllPageNumbers = false,
-                                    MaximumPageNumbersToDisplay = 5
-                                })
+                                LinkToPreviousPageFormat = "«",
+                                LinkToNextPageFormat = "»",
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                DisplayLinkToIndividualPages = true,
+                                DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+                                MaximumPageNumbersToDisplay = 5
+                            })
                             </nav>
                         }
                     </div>
