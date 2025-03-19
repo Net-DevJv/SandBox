@@ -50,6 +50,7 @@ namespace SnackHub.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.CreationDate = DateTime.Now;
                 _context.Categories.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -57,6 +58,7 @@ namespace SnackHub.Areas.Admin.Controllers
             return View(category);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +78,31 @@ namespace SnackHub.Areas.Admin.Controllers
             if (id != category.CategoryId)
                 return NotFound();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(category);
+
+            var existingCategory = await _context.Categories.FindAsync(id);
+            if (existingCategory == null)
+                return NotFound();
+
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+
+            existingCategory.UpdateDate = DateTime.Now;
+
+            try
             {
-                try
-                {
-                    _context.Categories.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Categories.Any(e => e.CategoryId == id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(category);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Categories.Any(e => e.CategoryId == id))
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -108,6 +118,7 @@ namespace SnackHub.Areas.Admin.Controllers
             return View(category);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

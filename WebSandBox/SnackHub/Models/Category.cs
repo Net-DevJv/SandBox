@@ -19,6 +19,14 @@ namespace SnackHub.Models
         [StringLength(500, MinimumLength = 20, ErrorMessageResourceType = typeof(SnackHub.Resources.ValidationMessages), ErrorMessageResourceName = "VAL008")]
         public string Description { get; set; }
 
+        [Display(Name = "Data de criação")]
+        [DataType(DataType.Date)]
+        public DateTime? CreationDate { get; set; }
+
+        [Display(Name = "Data de atualização")]
+        [DataType(DataType.Date)]
+        public DateTime? UpdateDate { get; set; }
+
         public List<Product> Products { get; set; } = new List<Product>();
     }
 }

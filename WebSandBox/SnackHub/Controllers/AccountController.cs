@@ -98,7 +98,8 @@ namespace SnackHub.Controllers
                 Email = model.Email,
                 FullName = model.FullName,
                 PasswordHash = HashPassword(model.Password),
-                UserType = UserType.Normal
+                UserType = UserType.Normal,
+                CreationDate = DateTime.Now
             };
 
             _context.Users.Add(newUser);
@@ -149,6 +150,5 @@ namespace SnackHub.Controllers
             var promptModel = new RegisterPromptViewModel { Email = email };
             return View(promptModel);
         }
-
     }
 }

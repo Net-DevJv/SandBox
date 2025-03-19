@@ -27,5 +27,13 @@ namespace SnackHub.Models
 
         [Required]
         public UserType UserType { get; set; }
+
+        [Display(Name = "Data de criação")]
+        [DataType(DataType.Date)]
+        public DateTime? CreationDate { get; set; }
+
+        [Display(Name = "Data de atualização")]
+        [DataType(DataType.Date)]
+        public DateTime? UpdateDate { get; set; }
     }
 }

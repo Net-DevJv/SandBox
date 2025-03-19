@@ -15,11 +15,21 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="get" asp-action="Index" class="row mb-3 justify-content-center">
+                    <form method="get" asp-action="Index" class="row mb-3 justify-content-center align-items-center">
                         <div class="col-auto">
                             <select name="categoryId" asp-items="ViewBag.Categories" class="form-select">
                                 <option value="">Todas as categorias</option>
                             </select>
+                        </div>
+
+                        <div class="col-auto d-flex align-items-center">
+                            <label for="startDate" class="me-2" style="white-space: nowrap;">Data Inicial:</label>
+                            <input type="date" id="startDate" name="startDate" value="@ViewBag.StartDate" class="form-control" />
+                        </div>
+
+                        <div class="col-auto d-flex align-items-center">
+                            <label for="endDate" class="me-2" style="white-space: nowrap;">Data Final:</label>
+                            <input type="date" id="endDate" name="endDate" value="@ViewBag.EndDate" class="form-control" />
                         </div>
 
                         <div class="col-auto">

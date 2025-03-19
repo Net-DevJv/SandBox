@@ -1,11 +1,10 @@
-﻿using SnackHub.Models;
-using SnackHub.AppContext;
-using X.PagedList.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SnackHub.Repositories.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using SnackHub.AppContext;
+using SnackHub.Models;
+using SnackHub.Repositories.Interfaces;
+using X.PagedList.Extensions;
 
 namespace SnackHub.Areas.Admin.Controllers
 {
@@ -25,11 +24,13 @@ namespace SnackHub.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString, int? categoryId, bool? inStock, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, bool? inStock, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 10)
         {
             ViewBag.SearchString = searchString;
             ViewBag.SelectedCategoryId = categoryId;
             ViewBag.InStockFilter = inStock;
+            ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
+            ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
 
             var allCategories = await _context.Categories.ToListAsync();
             ViewBag.Categories = new SelectList(allCategories, "CategoryId", "Name", categoryId);
@@ -47,6 +48,14 @@ namespace SnackHub.Areas.Admin.Controllers
             if (inStock.HasValue)
             {
                 products = products.Where(p => p.InStock == inStock.Value);
+            }
+            if (startDate.HasValue)
+            {
+                products = products.Where(p => p.CreationDate >= startDate.Value);
+            }
+            if (endDate.HasValue)
+            {
+                products = products.Where(p => p.CreationDate <= endDate.Value);
             }
 
             products = products.OrderBy(p => p.Name);
@@ -92,6 +101,7 @@ namespace SnackHub.Areas.Admin.Controllers
                 product.ImageUrl = $"/img/products/{fileName}";
             }
 
+            product.CreationDate = DateTime.Now;
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
@@ -164,6 +174,8 @@ namespace SnackHub.Areas.Admin.Controllers
 
                 existingProduct.ImageUrl = $"/img/products/{fileName}";
             }
+
+            existingProduct.UpdateDate = DateTime.Now;
 
             try
             {

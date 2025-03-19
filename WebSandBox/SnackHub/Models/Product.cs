@@ -42,5 +42,13 @@ namespace SnackHub.Models
 
         [ValidateNever]
         public virtual Category? Category { get; set; }
+
+        [Display(Name = "Data de criação")]
+        [DataType(DataType.Date)]
+        public DateTime? CreationDate { get; set; }
+
+        [Display(Name = "Data de atualização")]
+        [DataType(DataType.Date)]
+        public DateTime? UpdateDate { get; set; }
     }
 }
