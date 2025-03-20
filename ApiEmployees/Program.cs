@@ -20,7 +20,7 @@ builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 
 builder.Services.AddDbContext<WebApiDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LoggingDatabase"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString"));
 });
 
 builder.Services.AddControllers().AddJsonOptions(options =>
