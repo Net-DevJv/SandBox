@@ -13,6 +13,6 @@ namespace SnackHub.AppContext
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> SnackHubUsers { get; set; }
     }
 }

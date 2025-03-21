@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SnackHub.Models
 {
-    [Table("Users")]
+    [Table("SnackHubUsers")]
     public class User
     {
         [Key]

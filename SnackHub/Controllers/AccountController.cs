@@ -34,7 +34,7 @@ namespace SnackHub.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var user = await _context.SnackHubUsers.FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user == null)
             {
@@ -62,7 +62,7 @@ namespace SnackHub.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var user = await _context.SnackHubUsers.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (user == null || !VerifyPassword(model.Password, user.PasswordHash))
             {
                 ModelState.AddModelError("", "Senha incorreta!");
@@ -86,7 +86,7 @@ namespace SnackHub.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var user = await _context.SnackHubUsers.FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user != null)
             {
@@ -102,7 +102,7 @@ namespace SnackHub.Controllers
                 CreationDate = DateTime.Now
             };
 
-            _context.Users.Add(newUser);
+            _context.SnackHubUsers.Add(newUser);
             await _context.SaveChangesAsync();
             await SignInUser(newUser);
 
